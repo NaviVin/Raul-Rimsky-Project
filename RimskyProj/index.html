@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Top 5 Anime List - Home</title>
+    <style>
+        /* CSS Styling using the provided gradient palette */
+        :root {
+            /* Sampled colors from the palette (Dark Blue -> Purple -> Red/Orange -> Light Yellow) */
+            --dark-blue: #0A2D3C;   
+            --mid-blue: #374668;    
+            --purple: #6A4B7D;      
+            --coral-red: #F26D68;   
+            --bright-orange: #FF9B3B; 
+            --light-yellow: #FFDDA7; 
+            --text-color-dark: #333;
+            --text-color-light: #FFDDA7;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--mid-blue), var(--dark-blue)); 
+            color: var(--text-color-light);
+            min-height: 150vh; /* Added height for scrolling test */
+            position: relative;
+        }
+
+        /* Freeze the entire top bar (Header) */
+        .header-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--dark-blue); 
+            border-bottom: 3px solid var(--coral-red);
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        /* Title Styling (Center) */
+        .page-title {
+            font-size: 2.5em; 
+            color: var(--light-yellow);
+            letter-spacing: 5px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            margin: 0;
+        }
+
+        /* Main Content Container */
+        .content-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px 40px;
+            background-color: rgba(255, 255, 255, 0.95); 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            color: var(--text-color-dark);
+        }
+
+        /* List Styling */
+        .anime-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .anime-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-bottom: 1px dashed var(--mid-blue);
+        }
+
+        .anime-list li:last-child {
+            border-bottom: none;
+        }
+
+        .list-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--purple);
+            margin-right: 20px;
+            width: 40px;
+            text-align: center;
+        }
+
+        /* Image Placeholder Styling */
+        .cover-placeholder {
+            width: 200px;
+            height: 250px;
+            background-color: var(--light-yellow); 
+            border: 2px solid var(--coral-red);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .cover-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Anime Info Styling */
+        .anime-info {
+            flex-grow: 1;
+        }
+
+        /* --- MODIFIED CSS: Target the new div element for title styling --- */
+        .anime-info .anime-title-text {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--dark-blue);
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer; /* Keeps the visual cue of an interactive element */
+            display: inline-block; /* Treat it like an inline element */
+        }
+
+        /* --- MODIFIED CSS: Apply hover effect to the new div element --- */
+        .anime-info .anime-title-text:hover {
+            color: var(--coral-red);
+        }
+        
+        .anime-info p {
+            margin: 5px 0 0 0;
+            font-size: 0.9em;
+            color: var(--mid-blue);
+        }
+
+        /* Go to Top Button Styling (Bottom Right) */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--bright-orange);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            display: none; /* Hidden by default */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            transition: background-color 0.3s;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: var(--coral-red);
+            color: white;
+        }
+        
+        /* Credits Footer Styling */
+        .footer-credits {
+            background-color: var(--dark-blue);
+            color: var(--light-yellow);
+            text-align: center;
+            padding: 15px;
+            margin-top: 50px;
+            font-size: 0.75em; /* Small text as requested */
+            border-top: 1px solid var(--purple);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <h1 class="page-title">MY TOP 5 ANIME LIST</h1>
+    </div>
+
+    <div class="content-container">
+        
+        <ul class="anime-list">
+
+            <li>
+                <div class="list-number">1.</div>
+                <div class="cover-placeholder">
+                    <img src="naruto.jpg" alt="Naruto">
+                </div>
+                <div class="anime-info">
+                    <div class="anime-title-text">Naruto</div>
+                    <p>Action, Adventure, Martial Arts, Shounen</p>
+                </div>
+            </li>
+
+            <li>
+                <div class="list-number">2.</div>
+                <div class="cover-placeholder">
+                    <img src="hero.jpg" alt="My Hero Academia">
+                </div>
+                <div class="anime-info">
+                    <div class="anime-title-text">My Hero Academia</div>
+                    <p>Action, Superhero, School, Shounen</p>
+                </div>
+            </li>
+
+            <li>
+                <div class="list-number">3.</div>
+                <div class="cover-placeholder">
+                    <img src="jutsu.webp" alt="Jujutsu Kaisen">
+                </div>
+                <div class="anime-info">
+                    <div class="anime-title-text">Jujutsu Kaisen</div>
+                    <p>Supernatural, Action, Dark Fantasy, School, Shounen</p>
+                </div>
+            </li>
+
+            <li>
+                <div class="list-number">4.</div>
+                <div class="cover-placeholder">
+                    <img src="hxh.png" alt="Hunter x Hunter">
+                </div>
+                <div class="anime-info">
+                    <div class="anime-title-text">Hunter x Hunter (HxH)</div>
+                    <p>Adventure, Fantasy, Action, Shounen</p>
+                </div>
+            </li>
+
+            <li>
+                <div class="list-number">5.</div>
+                <div class="cover-placeholder">
+                    <img src="demon.jpg" alt="Demon Slayer">
+                </div>
+                <div class="anime-info">
+                    <div class="anime-title-text">Demon Slayer: Kimetsu no Yaiba</div>
+                    <p>Dark Fantasy, Adventure, Historical, Shounen</p>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <button onclick="topFunction()" id="scrollToTopBtn" title="Go to top">⬆️</button>
+
+    <div class="footer-credits">
+        © 2025 Raul Rimsky T Santoninio. All rights reserved. | Built with HTML and CSS | Powered by GitHub
+    </div>
+
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("scrollToTopBtn");
+
+        // When the user scrolls down 200px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+    </script>
+
+</body>
+</html>
