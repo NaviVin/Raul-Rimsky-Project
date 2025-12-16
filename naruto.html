@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naruto - Top 5 Characters</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@400;500&display=swap');
+
+        :root {
+            --primary-dark: #0f0f23;
+            --secondary-dark: #1a1a2e;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --text-light: #ffffff;
+            --text-gray: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            padding: 30px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .page-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3em;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            animation: glow 3s ease-in-out infinite;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.7));
+            }
+        }
+
+        .back-link {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            z-index: 10;
+        }
+
+        .back-link:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--accent-purple);
+            transform: translateY(-50%) translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 15px 10px;
+                text-align: left;
+            }
+
+            .back-link {
+                position: static;
+                transform: none;
+                display: inline-block;
+                margin-bottom: 10px;
+                text-align: left;
+                max-width: 120px;
+            }
+
+            .page-title {
+                font-size: 1.5em;
+                letter-spacing: 2px;
+                text-align: center;
+            }
+        }
+
+        .content-container {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 35px;
+            padding: 20px 0;
+        }
+
+        .character-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(15, 15, 35, 0.9));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .character-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            border-color: var(--accent-purple);
+            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.5);
+        }
+
+        .character-card:hover::before {
+            opacity: 1;
+        }
+
+        .character-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2em;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .character-image {
+            width: 100%;
+            height: 250px;
+            background: var(--secondary-dark);
+            border: 2px solid transparent;
+            background: linear-gradient(var(--secondary-dark), var(--secondary-dark)) padding-box,
+                        linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)) border-box;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: var(--text-gray);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .character-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .character-card:hover .character-image img {
+            transform: scale(1.1);
+        }
+
+        .character-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-credits {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            color: var(--text-gray);
+            text-align: center;
+            padding: 20px;
+            margin-top: 80px;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="Usseewa.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="header-container">
+        <a href="index.html" class="back-link">← Back</a>
+        <h1 class="page-title">NARUTO</h1>
+    </div>
+
+    <div class="content-container">
+        <h2>Top 5 Favorite Characters</h2>
+        
+        <div style="text-align: center; margin-bottom: 30px;">
+            <iframe id="spotifyPlayer" style="border-radius:12px" src="https://open.spotify.com/embed/track/1bEnIDpwKsyhDauHVoMz6t?utm_source=generator&autoplay=1" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        
+        <div class="characters-grid">
+            <div class="character-card">
+                <div class="character-number">#1</div>
+                <div class="character-image">
+                    <img src="uzumakinaruto.jpg" alt="Naruto Uzumaki" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="character-name">Naruto Uzumaki</div>
+            </div>
+
+            <div class="character-card">
+                <div class="character-number">#2</div>
+                <div class="character-image">
+                    <img src="sasuke.jpg" alt="Sasuke Uchiha" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="character-name">Sasuke Uchiha</div>
+            </div>
+
+            <div class="character-card">
+                <div class="character-number">#3</div>
+                <div class="character-image">
+                    <img src="kakashi.jpg" alt="Kakashi Hatake" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="character-name">Kakashi Hatake</div>
+            </div>
+
+            <div class="character-card">
+                <div class="character-number">#4</div>
+                <div class="character-image">
+                    <img src="itachi.jpg" alt="Itachi Uchiha" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="character-name">Itachi Uchiha</div>
+            </div>
+
+            <div class="character-card">
+                <div class="character-number">#5</div>
+                <div class="character-image">
+                    <img src="hinata.jpg" alt="Hinata Hyuga" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="character-name">Hinata Hyuga</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-credits">
+        © 2025 Raul Rimsky T Santoninio. All rights reserved. | Built with HTML and CSS | Powered by GitHub
+    </div>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+        const spotifyPlayer = document.getElementById('spotifyPlayer');
+        const playlist = ['Usseewa.mp3', 'Odo.mp3', 'ashura.mp3'];
+        let currentTrackIndex = 0;
+        let spotifyIsPlaying = false;
+        
+        // Resume music from saved state
+        const savedTime = localStorage.getItem('musicTime');
+        const savedTrack = localStorage.getItem('currentTrack');
+        const wasPlaying = localStorage.getItem('musicPlaying');
+        
+        if (savedTrack) {
+            currentTrackIndex = parseInt(savedTrack);
+            music.src = playlist[currentTrackIndex];
+        }
+        
+        if (savedTime) {
+            music.currentTime = parseFloat(savedTime);
+        }
+        
+        // Auto-play background music
+        if (wasPlaying === 'true' || wasPlaying === null) {
+            setTimeout(() => {
+                music.play().catch(e => console.log('Autoplay prevented'));
+            }, 100);
+        }
+        
+        // Save music state periodically
+        music.addEventListener('timeupdate', () => {
+            if (!music.paused) {
+                localStorage.setItem('musicTime', music.currentTime);
+                localStorage.setItem('musicPlaying', 'true');
+                localStorage.setItem('currentTrack', currentTrackIndex);
+            }
+        });
+        
+        // Handle track end - play next
+        music.addEventListener('ended', () => {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            music.src = playlist[currentTrackIndex];
+            localStorage.setItem('currentTrack', currentTrackIndex);
+            localStorage.setItem('musicTime', 0);
+            music.play().catch(e => console.log('Autoplay prevented'));
+        });
+        
+        // Detect when user clicks on Spotify
+        let checkInterval;
+        window.addEventListener('blur', () => {
+            if (document.activeElement === spotifyPlayer) {
+                // User clicked Spotify - pause background music
+                if (!music.paused) {
+                    music.pause();
+                    spotifyIsPlaying = true;
+                }
+                
+                // Start monitoring when they leave Spotify
+                if (checkInterval) clearInterval(checkInterval);
+                checkInterval = setInterval(() => {
+                    if (document.activeElement !== spotifyPlayer) {
+                        // User clicked away from Spotify - resume music
+                        clearInterval(checkInterval);
+                        checkInterval = null;
+                        if (spotifyIsPlaying) {
+                            setTimeout(() => {
+                                music.play().catch(e => console.log('Resume prevented'));
+                                spotifyIsPlaying = false;
+                            }, 500);
+                        }
+                    }
+                }, 300);
+            }
+        });
+        
+        // Save state when leaving
+        window.addEventListener('beforeunload', () => {
+            if (!music.paused) {
+                localStorage.setItem('musicTime', music.currentTime);
+                localStorage.setItem('musicPlaying', 'true');
+                localStorage.setItem('currentTrack', currentTrackIndex);
+            } else {
+                localStorage.setItem('musicPlaying', 'false');
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Top 5 Anime List - Home</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Roboto:wght@400;500&display=swap');
+
+        :root {
+            --primary-dark: #0f0f23;
+            --secondary-dark: #1a1a2e;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --text-light: #ffffff;
+            --text-gray: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+            padding: 30px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .page-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3em;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            animation: glow 3s ease-in-out infinite;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 30px rgba(6, 182, 212, 0.7));
+            }
+        }
+
+        .content-container {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .anime-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .anime-list li {
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(15, 15, 35, 0.9));
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .anime-list li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .anime-list li:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent-purple);
+            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.4);
+        }
+
+        .anime-list li:hover::before {
+            opacity: 1;
+        }
+
+        .list-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-right: 25px;
+            min-width: 80px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-placeholder {
+            width: 140px;
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-right: 30px;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.4s ease;
+            border: 2px solid transparent;
+            background: linear-gradient(var(--secondary-dark), var(--secondary-dark)) padding-box,
+                        linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)) border-box;
+        }
+
+        .anime-list li:hover .cover-placeholder {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .cover-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .anime-list li:hover .cover-placeholder img {
+            transform: scale(1.1);
+        }
+
+        .anime-info {
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .anime-info .anime-title-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .anime-info .anime-title-text::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));
+            transition: width 0.3s ease;
+        }
+
+        .anime-info .anime-title-text:hover {
+            color: var(--accent-cyan);
+            transform: translateX(10px);
+        }
+
+        .anime-info .anime-title-text:hover::after {
+            width: 100%;
+        }
+        
+        .anime-info p {
+            margin: 10px 0 0 0;
+            font-size: 1em;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.8em;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+
+        #scrollToTopBtn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.7);
+        }
+
+        #musicControl {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+            z-index: 999;
+            transition: all 0.3s ease;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        #musicControl:hover {
+            transform: translateY(-5px) rotate(15deg) scale(1.1);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.7);
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5); }
+            50% { box-shadow: 0 6px 30px rgba(6, 182, 212, 0.9); }
+        }
+
+        .music-panel {
+            position: fixed;
+            bottom: 90px;
+            left: 30px;
+            width: 260px;
+            max-height: 380px;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 15px;
+            padding: 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 998;
+        }
+
+        .music-panel.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .panel-header h3 {
+            margin: 0;
+            font-size: 16px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #closePanel {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        #closePanel:hover {
+            color: var(--accent-pink);
+            transform: rotate(90deg);
+        }
+
+        .panel-content {
+            padding: 15px;
+        }
+
+        .volume-control {
+            margin-bottom: 20px;
+        }
+
+        .volume-control label,
+        .track-selector label {
+            display: block;
+            color: var(--accent-cyan);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        #volumeSlider {
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: rgba(139, 92, 246, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        #volumeSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(6, 182, 212, 0.5);
+        }
+
+        #volumeSlider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 10px rgba(6, 182, 212, 0.5);
+        }
+
+        #volumeValue {
+            display: inline-block;
+            margin-top: 5px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .open-track-btn {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .open-track-btn:hover {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3));
+            border-color: var(--accent-cyan);
+            transform: translateX(3px);
+        }
+
+        .open-track-btn .arrow {
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .open-track-btn:hover .arrow {
+            transform: translateX(3px);
+        }
+
+        .track-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .track-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .track-modal-content {
+            background: rgba(26, 26, 46, 0.98);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .track-modal.show .track-modal-content {
+            transform: scale(1);
+        }
+
+        .track-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .track-modal-header h3 {
+            margin: 0;
+            font-size: 20px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #closeTrackModal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        #closeTrackModal:hover {
+            color: var(--accent-pink);
+            transform: rotate(90deg);
+        }
+
+        .track-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: calc(80vh - 80px);
+        }
+
+        .track-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .track-list::-webkit-scrollbar-track {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 4px;
+        }
+
+        .track-list::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 4px;
+        }
+
+        .track-list::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+        }
+
+        .track-btn {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .track-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: var(--accent-purple);
+            transform: translateX(5px);
+        }
+
+        .track-btn.active {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3));
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .now-playing {
+            padding: 12px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .now-playing strong {
+            display: block;
+            margin-top: 5px;
+            color: white;
+            font-size: 14px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .footer-credits {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            color: var(--text-gray);
+            text-align: center;
+            padding: 20px;
+            margin-top: 80px;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2em;
+                letter-spacing: 4px;
+            }
+
+            .anime-list li {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .list-number {
+                margin: 0 0 15px 0;
+            }
+
+            .cover-placeholder {
+                margin: 0 0 20px 0;
+            }
+
+            .anime-info .anime-title-text {
+                font-size: 1.3em;
+            }
+
+            .music-panel {
+                left: 50%;
+                transform: translateX(-50%) translateY(20px);
+                width: calc(100% - 40px);
+                max-width: 260px;
+            }
+
+            .music-panel.show {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <h1 class="page-title">MY TOP 5 ANIME LIST</h1>
+    </div>
+
+    <div class="content-container">
+        
+        <ul class="anime-list">
+
+            <li>
+                <div class="list-number">1.</div>
+                <a href="naruto.html" class="cover-placeholder">
+                    <img src="naruto.jpg" alt="Naruto">
+                </a>
+                <div class="anime-info">
+                    <a href="naruto.html" class="anime-title-text">Naruto</a>
+                    <p>Action, Adventure, Martial Arts, Shounen</p>
+                </div>
+            </li>
+
+            <li>
+                <div class="list-number">2.</div>
+                <a href="my-hero-academia.html" class="cover-placeholder">
+                    <img src="hero.jpg" alt="My Hero Academia">
+                </a>
+                <div class="anime-info">
+                    <a href="my-hero-academia.html" class="anime-title-text">My Hero Academia</a>
+                    <p>Action, Superhero, School, Shounen</p>
+                </div>
+            </li>
+
+            <li>
+                <div class="list-number">3.</div>
+                <a href="jujutsu-kaisen.html" class="cover-placeholder">
+                    <img src="jutsu.webp" alt="Jujutsu Kaisen">
+                </a>
+                <div class="anime-info">
+                    <a href="jujutsu-kaisen.html" class="anime-title-text">Jujutsu Kaisen</a>
+                    <p>Supernatural, Action, Dark Fantasy, School, Shounen</p>
+                </div>
+            </li>
+
+            <li>
+                <div class="list-number">4.</div>
+                <a href="hunter-x-hunter.html" class="cover-placeholder">
+                    <img src="hxh.png" alt="Hunter x Hunter">
+                </a>
+                <div class="anime-info">
+                    <a href="hunter-x-hunter.html" class="anime-title-text">Hunter x Hunter (HxH)</a>
+                    <p>Adventure, Fantasy, Action, Shounen</p>
+                </div>
+            </li>
+
+            <li>
+                <div class="list-number">5.</div>
+                <a href="demon-slayer.html" class="cover-placeholder">
+                    <img src="demon.jpg" alt="Demon Slayer">
+                </a>
+                <div class="anime-info">
+                    <a href="demon-slayer.html" class="anime-title-text">Demon Slayer: Kimetsu no Yaiba</a>
+                    <p>Dark Fantasy, Adventure, Historical, Shounen</p>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <button onclick="topFunction()" id="scrollToTopBtn" title="Go to top">⬆️</button>
+
+    <!-- Music Control Button -->
+    <button id="musicControl" title="Music Settings">♪</button>
+    
+    <!-- Music Settings Panel -->
+    <div id="musicPanel" class="music-panel">
+        <div class="panel-header">
+            <h3>Music Settings</h3>
+            <button id="closePanel">×</button>
+        </div>
+        <div class="panel-content">
+            <div class="volume-control">
+                <label for="volumeSlider">Volume</label>
+                <input type="range" id="volumeSlider" min="0" max="100" value="100">
+                <span id="volumeValue">100%</span>
+            </div>
+            <div class="now-playing">
+                <span>Now Playing:</span>
+                <strong id="currentTrackName">Usseewa</strong>
+            </div>
+            <button id="openTrackSelector" class="open-track-btn">
+                <span>Select Track</span>
+                <span class="arrow">→</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Track Selection Modal -->
+    <div id="trackModal" class="track-modal">
+        <div class="track-modal-content">
+            <div class="track-modal-header">
+                <h3>Select Track</h3>
+                <button id="closeTrackModal">×</button>
+            </div>
+            <div class="track-list">
+                <button class="track-btn active" data-track="0">Usseewa</button>
+                <button class="track-btn" data-track="1">Odo</button>
+                <button class="track-btn" data-track="2">Ashura</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="bgMusic">
+        <source src="Usseewa.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="footer-credits">
+        © 2025 Raul Rimsky T Santoninio. All rights reserved. | Built with HTML and CSS | Powered by GitHub
+    </div>
+
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("scrollToTopBtn");
+
+        // When the user scrolls down 200px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        }
+
+        // Background music playlist management
+        const music = document.getElementById('bgMusic');
+        const playlist = ['Usseewa.mp3', 'Odo.mp3', 'ashura.mp3'];
+        const trackNames = ['Usseewa', 'Odo', 'Ashura'];
+        let currentTrackIndex = 0;
+        let isUserPaused = false;
+        
+        // Try to resume music from previous state
+        const savedTime = localStorage.getItem('musicTime');
+        const savedTrack = localStorage.getItem('currentTrack');
+        const wasPlaying = localStorage.getItem('musicPlaying');
+        
+        if (savedTrack) {
+            currentTrackIndex = parseInt(savedTrack);
+            music.src = playlist[currentTrackIndex];
+        }
+        
+        if (savedTime) {
+            music.currentTime = parseFloat(savedTime);
+        }
+        
+        // Clear character page flag - we're on index page now
+        localStorage.setItem('onCharacterPage', 'false');
+        
+        // Auto-play if it was playing before, or start for first time
+        if (wasPlaying === 'true' || wasPlaying === null) {
+            setTimeout(() => {
+                music.play().catch(e => {
+                    console.log('Autoplay prevented. User interaction needed.');
+                });
+            }, 100);
+        }
+        
+        // When current track ends, play next track
+        music.addEventListener('ended', () => {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            music.src = playlist[currentTrackIndex];
+            localStorage.setItem('currentTrack', currentTrackIndex);
+            localStorage.setItem('musicTime', 0);
+            music.play().catch(e => console.log('Autoplay prevented'));
+        });
+        
+        // Save position periodically
+        music.addEventListener('timeupdate', () => {
+            if (!music.paused) {
+                localStorage.setItem('musicTime', music.currentTime);
+                localStorage.setItem('musicPlaying', 'true');
+                localStorage.setItem('currentTrack', currentTrackIndex);
+            }
+        });
+        
+        music.addEventListener('pause', () => {
+            if (isUserPaused) {
+                localStorage.setItem('musicPlaying', 'false');
+            }
+        });
+        
+        music.addEventListener('play', () => {
+            isUserPaused = false;
+            localStorage.setItem('musicPlaying', 'true');
+        });
+        
+        // Save state before page unload
+        window.addEventListener('beforeunload', () => {
+            if (!music.paused) {
+                localStorage.setItem('musicTime', music.currentTime);
+                localStorage.setItem('musicPlaying', 'true');
+                localStorage.setItem('currentTrack', currentTrackIndex);
+            }
+        });
+
+        // Music control panel
+        const musicControlBtn = document.getElementById('musicControl');
+        const musicPanel = document.getElementById('musicPanel');
+        const closePanel = document.getElementById('closePanel');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+        const currentTrackName = document.getElementById('currentTrackName');
+        const openTrackSelector = document.getElementById('openTrackSelector');
+        const trackModal = document.getElementById('trackModal');
+        const closeTrackModal = document.getElementById('closeTrackModal');
+        const trackBtns = document.querySelectorAll('.track-btn');
+
+        // Load saved volume
+        const savedVolume = localStorage.getItem('musicVolume');
+        if (savedVolume) {
+            music.volume = parseFloat(savedVolume);
+            volumeSlider.value = savedVolume * 100;
+            volumeValue.textContent = Math.round(savedVolume * 100) + '%';
+        }
+
+        // Update track name display
+        function updateTrackDisplay() {
+            currentTrackName.textContent = trackNames[currentTrackIndex];
+            trackBtns.forEach((btn, index) => {
+                btn.classList.toggle('active', index === currentTrackIndex);
+            });
+        }
+        updateTrackDisplay();
+
+        // Toggle music panel
+        musicControlBtn.addEventListener('click', () => {
+            musicPanel.classList.toggle('show');
+        });
+
+        closePanel.addEventListener('click', () => {
+            musicPanel.classList.remove('show');
+        });
+
+        // Close panel when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!musicPanel.contains(e.target) && !musicControlBtn.contains(e.target)) {
+                musicPanel.classList.remove('show');
+            }
+        });
+
+        // Open track selection modal
+        openTrackSelector.addEventListener('click', () => {
+            trackModal.classList.add('show');
+        });
+
+        // Close track modal
+        closeTrackModal.addEventListener('click', () => {
+            trackModal.classList.remove('show');
+        });
+
+        // Close modal when clicking outside
+        trackModal.addEventListener('click', (e) => {
+            if (e.target === trackModal) {
+                trackModal.classList.remove('show');
+            }
+        });
+
+        // Volume control
+        volumeSlider.addEventListener('input', (e) => {
+            const volume = e.target.value / 100;
+            music.volume = volume;
+            volumeValue.textContent = e.target.value + '%';
+            localStorage.setItem('musicVolume', volume);
+        });
+
+        // Track selection
+        trackBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                currentTrackIndex = index;
+                music.src = playlist[currentTrackIndex];
+                music.currentTime = 0;
+                localStorage.setItem('currentTrack', currentTrackIndex);
+                localStorage.setItem('musicTime', 0);
+                updateTrackDisplay();
+                music.play().catch(e => console.log('Play prevented'));
+                trackModal.classList.remove('show');
+            });
+        });
+
+        // Update display when track changes automatically
+        const originalEndedHandler = music.onended;
+        music.addEventListener('ended', () => {
+            setTimeout(() => updateTrackDisplay(), 100);
+        });
+    </script>
+
+</body>
+</html>
